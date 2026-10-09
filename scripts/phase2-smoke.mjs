@@ -1,0 +1,121 @@
+import { _electron as electron,expect } from '@playwright/test';
+import { Mp3Encoder } from '@breezystack/lamejs';
+import { mkdtemp,writeFile,mkdir } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join,resolve } from 'node:path';
+import assert from 'node:assert/strict';
+const directory=await mkdtemp(join(tmpdir(),'synestra-phase2-'));
+await mkdir('docs',{recursive:true});
+function encode(frequencies,seconds,rhythmic=false){
+ const rate=44100,encoder=new Mp3Encoder(1,rate,128),chunks=[];
+ let phaseIndex=0;
+ for(let start=0;start<rate*seconds;start+=1152){
+  const samples=new Int16Array(Math.min(1152,rate*seconds-start));
+  for(let j=0;j<samples.length;j++){
+   const t=(start+j)/rate;
+   let value=0;
+   for(let k=0;k<frequencies.length;k++)value+=Math.sin(2*Math.PI*frequencies[k]*t+k*2.39996);
+   const envelope=rhythmic?0.55+0.45*Math.exp(-(t%0.5)/0.09):1;
+   value=value/Math.sqrt(frequencies.length)*0.28*envelope;
+   samples[j]=Math.round(Math.max(-0.98,Math.min(0.98,value))*32767);
+  }
+  chunks[phaseIndex++]=Buffer.from(encoder.encodeBuffer(samples));
+ }
+ chunks.push(Buffer.from(encoder.flush()));return Buffer.concat(chunks);
+}
+const steady=join(directory,'Steady signal.mp3'),broad=join(directory,'Broad rhythmic field.mp3');
+await writeFile(steady,encode([220],12));
+await writeFile(broad,encode(Array.from({length:48},(_,i)=>70*Math.pow(11000/70,i/47)),18,true));
+const env={...process.env};delete env.ELECTRON_RUN_AS_NODE;delete env.SYNESTRA_DEV_URL;
+const executablePath=process.env.SYNESTRA_EXECUTABLE;
+let app;
+const launch=async(extra=[])=>{
+ app=await electron.launch({executablePath,args:[...(executablePath?[]:[resolve('.')]),'--user-data-dir='+join(directory,'profile'),...extra],env,timeout:30000});
+ const page=await app.firstWindow();await page.waitForLoadState('domcontentloaded');
+ await page.getByRole('combobox',{name:'Visual mode',exact:true}).selectOption('spectrum');await expect(page.locator('.world-title')).toContainText('Spectrum');return page;
+};
+try{
+ let page=await launch();
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await app.evaluate(({dialog},files)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:files});},[steady,broad]);
+ await page.getByRole('button',{name:'Import music',exact:true}).click();
+ await page.getByRole('button',{name:'Queue',exact:true}).click();await expect(page.locator('.track')).toHaveCount(2);await page.getByRole('button',{name:'Tune',exact:true}).click();
+ await page.getByRole('button',{name:'Signals',exact:true}).click();
+ await expect(page.locator('[data-signal=renderer]')).toHaveText('WebGL');
+ await page.getByRole('button',{name:'Play',exact:true}).click();
+ await expect(page.locator('.now-playing [role=status]')).toHaveText('Now playing');
+ const rms=()=>page.locator('[data-signal=rms]').innerText().then(Number);
+ await expect.poll(rms).toBeGreaterThan(0.15);
+ const before=await rms();
+ await page.getByRole('slider',{name:'Volume',exact:true}).fill('0');
+ await new Promise(resolve=>setTimeout(resolve,900));
+ const muted=await rms();
+ assert.ok(Math.abs(before-muted)<0.012,JSON.stringify({before,muted}));
+ const seek=page.getByRole('slider',{name:'Seek',exact:true});
+ const position=Number(await seek.inputValue());
+ await page.getByRole('button',{name:'Linear',exact:true}).click();
+ await page.getByRole('slider',{name:'Sensitivity',exact:true}).fill('1.5');
+ await page.getByRole('slider',{name:'Visual richness',exact:true}).fill('0.95');
+ await page.getByRole('slider',{name:'Smoothing',exact:true}).fill('0.75');
+ await expect(page.locator('.now-playing [role=status]')).toHaveText('Now playing');
+ await expect.poll(async()=>Number(await seek.inputValue())).toBeGreaterThan(position+0.3);
+ await page.getByRole('button',{name:'Queue',exact:true}).click();await page.locator('.track').nth(1).click();await page.getByRole('button',{name:'Tune',exact:true}).click();await page.getByRole('button',{name:'Signals',exact:true}).click();
+ await expect(page.locator('.now-playing [role=status]')).toHaveText('Now playing');
+ await expect.poll(()=>page.locator('[data-signal=coverage]').innerText().then(x=>parseFloat(x))).toBeGreaterThan(60);
+ await expect.poll(()=>page.locator('[data-signal=activity]').innerText().then(x=>parseFloat(x)),{timeout:8000}).toBeGreaterThan(65);
+ await page.getByRole('button',{name:'Signals',exact:true}).click();
+ await page.screenshot({path:'docs/phase2-linear.png'});
+ await page.getByRole('button',{name:'Radial',exact:true}).click();
+ await page.getByRole('button',{name:'Tune',exact:true}).click();
+ await new Promise(resolve=>setTimeout(resolve,600));
+ await page.screenshot({path:'docs/phase2-radial.png'});
+ const originalCanvas=await page.locator('.spectrum-canvas canvas').elementHandle();
+ for(let i=0;i<6;i++)await page.getByRole('button',{name:i%2?'Radial':'Linear',exact:true}).click();
+ assert.equal(await originalCanvas.evaluate(canvas=>canvas.isConnected),true);
+ await expect(page.locator('.spectrum-canvas canvas')).toHaveCount(1);
+ await app.evaluate(({BrowserWindow})=>{const w=BrowserWindow.getAllWindows()[0];w.setSize(1600,1100);w.webContents.setZoomFactor(1.5);});
+ await expect.poll(()=>page.evaluate(()=>window.devicePixelRatio)).toBeGreaterThan(1.4);
+ await new Promise(resolve=>setTimeout(resolve,350));
+ const pixels=await page.locator('.spectrum-canvas canvas').evaluate(canvas=>({ratio:canvas.width/canvas.clientWidth,dpr:devicePixelRatio}));
+ assert.ok(Math.abs(pixels.ratio-Math.min(1.5,pixels.dpr))<0.02,JSON.stringify(pixels));
+ await app.evaluate(({BrowserWindow})=>{const w=BrowserWindow.getAllWindows()[0];w.webContents.setZoomFactor(1);w.setSize(780,600);});
+ await page.getByRole('button',{name:'Tune',exact:true}).click();
+ await new Promise(resolve=>setTimeout(resolve,600));
+ await page.screenshot({path:'docs/phase2-compact.png'});
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+ assert.ok(await page.getByRole('slider',{name:'Volume',exact:true}).isVisible());
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await expect(page.locator('.stage-footer')).toContainText('REDUCED MOTION');
+ await page.getByRole('button',{name:'Signals',exact:true}).click();
+ await page.getByRole('button',{name:'Pause',exact:true}).click();
+ await expect.poll(()=>page.locator('[data-signal=activity]').innerText().then(x=>parseFloat(x)),{timeout:7000}).toBeLessThan(3);
+ assert.equal(await rms(),0);
+ await page.getByRole('button',{name:'Play',exact:true}).click();
+ await expect.poll(rms).toBeGreaterThan(0.1);
+ const lost=await page.locator('.spectrum-canvas canvas').evaluate(canvas=>{
+  const gl=canvas.getContext('webgl2');const extension=gl?.getExtension('WEBGL_lose_context');
+  extension?.loseContext();return !!extension;
+ });
+ assert.equal(lost,true);
+ await expect(page.locator('[data-signal=renderer]')).toHaveText('Waveform fallback');
+ await expect(page.locator('.now-playing [role=status]')).toHaveText('Now playing');
+ const fallbackPosition=Number(await seek.inputValue());
+ await expect.poll(async()=>Number(await seek.inputValue())).toBeGreaterThan(fallbackPosition+0.3);
+ await page.screenshot({path:'docs/phase2-fallback.png'});
+ assert.deepEqual(errors,[]);
+ await app.close();app=null;
+ page=await launch();
+ await page.addInitScript(()=>{
+   const original=HTMLCanvasElement.prototype.getContext;
+   HTMLCanvasElement.prototype.getContext=function(type,...args){return /webgl/i.test(type)?null:original.call(this,type,...args);};
+ });
+ await page.reload();
+ await page.getByRole('button',{name:'Tune',exact:true}).click();await page.getByRole('button',{name:'Signals',exact:true}).click();
+ await expect(page.locator('[data-signal=renderer]')).toHaveText('Waveform fallback');
+ await page.getByRole('button',{name:'Play',exact:true}).click();
+ await expect(page.locator('.now-playing [role=status]')).toHaveText('Now playing');
+ await expect.poll(()=>page.locator('[data-signal=rms]').innerText().then(Number)).toBeGreaterThan(0.15);
+ console.log('PASS: measured signal and coverage; volume-independent analysis; linear/radial layouts and tuning without audio interruption; pause decay; resize; reduced motion; live context-loss fallback; GPU initialization failure fallback; no renderer exceptions.');
+ console.log('RMS before mute / after mute:',before,muted);
+ console.log('Generated fixtures and isolated profile:',directory);
+}finally{await app?.close();}

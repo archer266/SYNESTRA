@@ -1,0 +1,8 @@
+{
+  "width": 3840,
+  "height": 2160,
+  "median": 16.700000000000728,
+  "p95": 16.80000000000109,
+  "gpu": "ANGLE (AMD, AMD Radeon RX 6800 XT (0x000073BF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "error": 0
+}

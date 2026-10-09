@@ -1,0 +1,10 @@
+{
+  "meanFps": 59.97401126178657,
+  "medianFrameMs": 16.700000000000728,
+  "p95FrameMs": 16.799999999999272,
+  "gpu": "ANGLE (AMD, AMD Radeon RX 6800 XT (0x000073BF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "width": 1440,
+  "height": 900,
+  "dpr": 1,
+  "recording": true
+}

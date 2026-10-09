@@ -1,0 +1,5 @@
+ecma-proposal-math-extensions 0.0.2
+Author: Rick Waldron
+Declared license: MIT
+Repository: git+https://github.com/tc39/proposal-math-extensions.git
+The npm archive declares MIT in package.json but does not include a separate LICENSE file.

@@ -1,0 +1,99 @@
+{
+  "profile": "C:\\Users\\Admin\\AppData\\Local\\Temp\\synestra-milkdrop-o2gW5D",
+  "resources": [
+    177,
+    177,
+    177,
+    177,
+    177,
+    177,
+    177,
+    177,
+    177,
+    177,
+    177,
+    177
+  ],
+  "rmsBeforeMute": 0.09848749999999999,
+  "rmsAfterMute": 0.0823125,
+  "realTrack": "Bartender (Instrumental).mp3",
+  "measurements": [
+    {
+      "preset": "galaxy",
+      "quality": "economy",
+      "limit": "720p",
+      "width": 1229,
+      "height": 691,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.799999999995634,
+      "gpu": "ANGLE (AMD, AMD Radeon RX 6800 XT (0x000073BF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "error": 0
+    },
+    {
+      "preset": "galaxy",
+      "quality": "balanced",
+      "limit": "1080p",
+      "width": 1686,
+      "height": 948,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.80000000000291,
+      "gpu": "ANGLE (AMD, AMD Radeon RX 6800 XT (0x000073BF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "error": 0
+    },
+    {
+      "preset": "galaxy",
+      "quality": "high",
+      "limit": "1440p",
+      "width": 2560,
+      "height": 1440,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.80000000000291,
+      "gpu": "ANGLE (AMD, AMD Radeon RX 6800 XT (0x000073BF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "error": 0
+    },
+    {
+      "preset": "galaxy",
+      "quality": "high",
+      "limit": "2160p",
+      "width": 3840,
+      "height": 2160,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.900000000001455,
+      "gpu": "ANGLE (AMD, AMD Radeon RX 6800 XT (0x000073BF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "error": 0
+    },
+    {
+      "preset": "aurora",
+      "quality": "high",
+      "limit": "2160p",
+      "width": 3840,
+      "height": 2160,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.89999999999418,
+      "gpu": "ANGLE (AMD, AMD Radeon RX 6800 XT (0x000073BF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "error": 0
+    },
+    {
+      "preset": "liquid",
+      "quality": "high",
+      "limit": "2160p",
+      "width": 3840,
+      "height": 2160,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.80000000000291,
+      "gpu": "ANGLE (AMD, AMD Radeon RX 6800 XT (0x000073BF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "error": 0
+    },
+    {
+      "preset": "crystal",
+      "quality": "high",
+      "limit": "2160p",
+      "width": 3840,
+      "height": 2160,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.89999999999418,
+      "gpu": "ANGLE (AMD, AMD Radeon RX 6800 XT (0x000073BF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "error": 0
+    }
+  ]
+}
