@@ -1,6 +1,6 @@
 import { _electron as electron, expect } from '@playwright/test';
 import { Mp3Encoder } from '@breezystack/lamejs';
-import { mkdtemp, writeFile, readFile, mkdir } from 'node:fs/promises';
+import { mkdtemp, writeFile, readFile, mkdir, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import assert from 'node:assert/strict';
@@ -99,6 +99,9 @@ try{
  page=await launch();await page.getByRole('button',{name:'Queue',exact:true}).click();await expect(page.locator('.track')).toHaveCount(3);
  await expect(page.getByRole('status')).toHaveText('Ready to listen');
  await expect(page.getByRole('button',{name:'Play',exact:true})).toBeVisible();
+ // The removed file is this test's generated fixture, never source music.
+ await unlink(long);await page.locator('.track').first().click();await expect(status()).toHaveText('Playback unavailable');
+ await page.locator('.track').nth(1).click();await expect(status()).toHaveText('Now playing');
  assert.deepEqual(await readFile(short),segment);assert.deepEqual(errors,[]);
  console.log('PASS: real Electron playback; cancel/import (dialog stub); sandbox/isolation; four long-track seeks with playback progress; pause and keyboard focus; volume; shuffle; repeat-one/all/off and natural completion; previous/next; damaged-file recovery; resize; queue; persistence; no autoplay.');
  console.log('Test profile retained for inspection: '+temp);

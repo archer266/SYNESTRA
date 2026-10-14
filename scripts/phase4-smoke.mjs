@@ -86,11 +86,12 @@ try{
  await button('Play').click();await expect(preset).toHaveValue('galaxy',{timeout:22000});await intact();
  await page.getByRole('checkbox',{name:'Automatic cycling',exact:true}).uncheck();
  // Every existing scene, saved volume and sole audio graph remain intact.
- for(const id of ['pearl','spectrum','milkdrop','pearl','milkdrop']){const old=await page.locator('canvas').elementHandle();await mode().selectOption(id);await expect(page.locator('canvas')).toHaveCount(1);assert.equal(await old.evaluate(c=>c.isConnected),false);await intact();}
+ for(const id of ['classic','pearl','spectrum','milkdrop','pearl','milkdrop']){const old=await page.locator('canvas').elementHandle();await mode().selectOption(id);await expect(page.locator('canvas')).toHaveCount(1);assert.equal(await old.evaluate(c=>c.isConnected),false);await intact();}
  await expect(page.locator('canvas')).toHaveAttribute('aria-label','MilkDrop visualizer');
  await expect(page.getByRole('slider',{name:'Volume',exact:true})).toHaveValue('0.3');
  await page.getByRole('combobox',{name:'Palette',exact:true}).selectOption('glacier');await page.getByRole('slider',{name:'Visual richness',exact:true}).fill('0.4');
- await expect(page.locator('canvas')).toHaveCSS('filter','hue-rotate(-35deg) saturate(1)');
+ await expect(page.locator('canvas')).toHaveCSS('filter',/^hue-rotate\(-35deg\) saturate\(1\) brightness\(1(?:\.\d+)?\)$/);
+ const brightness=await page.locator('canvas').evaluate(c=>Number(getComputedStyle(c).filter.match(/brightness\(([^)]+)/)[1]));assert.ok(brightness>=1&&brightness<=1.04);
  await page.getByRole('slider',{name:'Sensitivity',exact:true}).fill('1.4');await page.getByRole('slider',{name:'Smoothing',exact:true}).fill('0.8');await page.getByRole('slider',{name:'Motion',exact:true}).fill('0.4');await intact();
  await page.emulateMedia({reducedMotion:'reduce'});await expect(page.locator('[data-signal=engine]')).toContainText('Waveform fallback');await intact();
  await page.emulateMedia({reducedMotion:'no-preference'});await expect(page.locator('canvas')).toHaveAttribute('aria-label','MilkDrop visualizer');await intact();

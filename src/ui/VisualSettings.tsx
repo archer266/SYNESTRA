@@ -1,3 +1,4 @@
+import { milkdropPresets } from '../visuals/milkdrop/catalog';
 import { MilkDropControls } from './MilkDropControls';
 import { useState } from 'react';
 import { Activity,ChevronDown } from 'lucide-react';
@@ -44,6 +45,7 @@ export function VisualSettings({config,change,diagnostics}: Props){
         <dt>Sample rate / FFT</dt><dd>{diagnostics.sampleRate?diagnostics.sampleRate+' / '+diagnostics.fftSize:'Awaiting playback'}</dd>
         <dt>Renderer</dt><dd data-signal="renderer">{diagnostics.renderer}</dd>
         <dt>Active engine</dt><dd data-signal="engine">{diagnostics.engine} / {diagnostics.backend}</dd>
+        {config.mode==='milkdrop'&&<><dt>Loaded preset</dt><dd data-signal="active-preset">{milkdropPresets.find(p=>p.id===diagnostics.activePreset)?.name??'None / fallback'}</dd></>}
         <dt>Render dimensions</dt><dd data-signal="resolution">{diagnostics.renderWidth} x {diagnostics.renderHeight}</dd>
         <dt>Effective pixel ratio</dt><dd>{diagnostics.pixelRatio.toFixed(2)}</dd>
         <dt>Frame interval / FPS</dt><dd data-signal="timing">{diagnostics.frameMs.toFixed(1)} ms / {diagnostics.fps.toFixed(1)}</dd>

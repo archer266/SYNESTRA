@@ -1,3 +1,4 @@
+import { milkdropPresets } from '../visuals/milkdrop/catalog';
 import { useEffect,useRef,useState } from 'react';
 import { SceneDirector } from '../visuals/director';
 import type { VisualConfig,VisualDiagnostics } from '../visuals/contracts';
@@ -21,7 +22,7 @@ export function SpectrumStage({config,diagnostics,onDiagnostics,onConfiguration}
   };
   return <>
     <div className="spectrum-viewport"><div className="spectrum-canvas" ref={host}/></div>
-    <div className="stage-footer"><span className="world-title">{config.mode==='classic'?'Classic / Lightflow':config.mode==='pearl'?'Pearl':config.mode==='milkdrop'?'MilkDrop':'Spectrum'} <span className="stage-separator">/</span> <span className="stage-state">{diagnostics?.stage??'Quiet'}</span></span>
+    <div className="stage-footer"><span className="world-title">{config.mode==='classic'?'Classic / Lightflow':config.mode==='pearl'?'Pearl':config.mode==='milkdrop'?'MilkDrop / '+(milkdropPresets.find(p=>p.id===diagnostics?.activePreset)?.label??(diagnostics?.fallbackReason?'Waveform fallback':'Loading')):'Spectrum'} <span className="stage-separator">/</span> <span className="stage-state">{diagnostics?.stage??'Quiet'}</span></span>
       <span>{diagnostics?.reducedMotion?'REDUCED MOTION':diagnostics?.fallbackReason?'Waveform fallback - audio continues':'LIVE AUDIO'}</span>
       <div className="stage-actions">{diagnostics?.fallbackReason&&!(config.mode==='milkdrop'&&(diagnostics.reducedMotion||config.motion===0))&&<button onClick={()=>director.current?.retryGraphics()}>Retry graphics</button>}<button onClick={()=>void toggleFullscreen()}>{fullscreen?'Exit fullscreen':'Enter fullscreen'}</button></div>
       {error&&<span role="alert">{error}</span>}

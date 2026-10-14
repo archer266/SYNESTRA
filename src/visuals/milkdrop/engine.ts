@@ -1,8 +1,9 @@
+import { preparePreset } from './prepare';
 import { MusicalResponse } from '../musicalResponse';
 import type { VisualEngine,EngineContext,RenderSize,VisualFrame } from '../engine';
 import { defaultVisualConfig,type VisualConfig } from '../contracts';
 import { presets } from './presets.generated';
-import type { MilkFactory,MilkPreset,MilkVisualizer } from './types';
+import type { MilkFactory,MilkVisualizer } from './types';
 import { MilkAudioInput } from './audio';
 import { driveMilkClock } from './clock';
 import { GLResources } from './resources';
@@ -42,7 +43,7 @@ export class MilkDropEngine implements VisualEngine {
   if(!this.visualizer)return;
   const source=presets[this.config.milkdropPreset];
   // Upstream mutates nested baseVals; never mutate the static catalog shared between engine instances.
-  const copy:MilkPreset={...source,baseVals:{...source.baseVals},shapes:source.shapes.map(p=>({...p,baseVals:{...p.baseVals}})),waves:source.waves.map(p=>({...p,baseVals:{...p.baseVals}}))};
+  const copy=preparePreset(this.config.milkdropPreset,source);
   this.visualizer.loadPreset(copy,seconds);this.selected=this.config.milkdropPreset;
   this.resources?.sweep(this.visualizer);
  }

@@ -1,0 +1,487 @@
+{
+  "profile": "C:\\Users\\Admin\\AppData\\Local\\Temp\\synestra-collection-fo7rW7",
+  "presets": [
+    {
+      "id": "aurora",
+      "label": "Aurora",
+      "from": 1.296,
+      "duration": 24,
+      "stages": [
+        {
+          "signal": "quiet",
+          "mean": 6.689401455026457,
+          "lit": 0.21502976190476192,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "aurora",
+          "blend": "1.000"
+        },
+        {
+          "signal": "bass",
+          "mean": 23.747767857142897,
+          "lit": 0.35912698412698413,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "aurora",
+          "blend": "1.000"
+        },
+        {
+          "signal": "dense",
+          "mean": 16.271990740740737,
+          "lit": 0.2569444444444444,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "aurora",
+          "blend": "1.000"
+        },
+        {
+          "signal": "silence",
+          "mean": 4.004464285714286,
+          "lit": 0.17881944444444445,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "aurora",
+          "blend": "1.000"
+        }
+      ]
+    },
+    {
+      "id": "galaxy",
+      "label": "Cosmic layers",
+      "from": 25.628,
+      "duration": 24,
+      "stages": [
+        {
+          "signal": "quiet",
+          "mean": 5.349537037037039,
+          "lit": 0.9268353174603174,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "galaxy",
+          "blend": "1.000"
+        },
+        {
+          "signal": "bass",
+          "mean": 38.90079365079356,
+          "lit": 0.9962797619047619,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "galaxy",
+          "blend": "1.000"
+        },
+        {
+          "signal": "dense",
+          "mean": 134.23197751322743,
+          "lit": 1,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "galaxy",
+          "blend": "1.000"
+        },
+        {
+          "signal": "silence",
+          "mean": 5.643353174603169,
+          "lit": 0.9340277777777778,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "galaxy",
+          "blend": "1.000"
+        }
+      ]
+    },
+    {
+      "id": "liquid",
+      "label": "Liquid color",
+      "from": 50.903,
+      "duration": 24,
+      "stages": [
+        {
+          "signal": "quiet",
+          "mean": 61.24057539682529,
+          "lit": 1,
+          "white": 0.007936507936507936,
+          "error": 0,
+          "resources": 177,
+          "preset": "liquid",
+          "blend": "1.000"
+        },
+        {
+          "signal": "bass",
+          "mean": 146.92435515873026,
+          "lit": 1,
+          "white": 0.001488095238095238,
+          "error": 0,
+          "resources": 177,
+          "preset": "liquid",
+          "blend": "1.000"
+        },
+        {
+          "signal": "dense",
+          "mean": 154.03290343915376,
+          "lit": 1,
+          "white": 0.009672619047619048,
+          "error": 0,
+          "resources": 177,
+          "preset": "liquid",
+          "blend": "1.000"
+        },
+        {
+          "signal": "silence",
+          "mean": 100.13533399470916,
+          "lit": 1,
+          "white": 0.003472222222222222,
+          "error": 0,
+          "resources": 177,
+          "preset": "liquid",
+          "blend": "1.000"
+        }
+      ]
+    },
+    {
+      "id": "kaleidoscope",
+      "label": "Kaleidoscope",
+      "from": 25.649,
+      "duration": 24,
+      "stages": [
+        {
+          "signal": "quiet",
+          "mean": 163.3826058201059,
+          "lit": 0.9965277777777778,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "kaleidoscope",
+          "blend": "1.000"
+        },
+        {
+          "signal": "bass",
+          "mean": 19.62466931216932,
+          "lit": 0.9231150793650794,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "kaleidoscope",
+          "blend": "1.000"
+        },
+        {
+          "signal": "dense",
+          "mean": 33.0630787037037,
+          "lit": 0.9092261904761905,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "kaleidoscope",
+          "blend": "1.000"
+        },
+        {
+          "signal": "silence",
+          "mean": 89.65848214285785,
+          "lit": 1,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "kaleidoscope",
+          "blend": "1.000"
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "label": "Chrome tunnel",
+      "from": 101.561,
+      "duration": 24,
+      "stages": [
+        {
+          "signal": "quiet",
+          "mean": 61.295386904761685,
+          "lit": 0.9990079365079365,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "tunnel",
+          "blend": "1.000"
+        },
+        {
+          "signal": "bass",
+          "mean": 79.75735780423265,
+          "lit": 1,
+          "white": 0.000496031746031746,
+          "error": 0,
+          "resources": 177,
+          "preset": "tunnel",
+          "blend": "1.000"
+        },
+        {
+          "signal": "dense",
+          "mean": 63.09887566137565,
+          "lit": 0.9977678571428571,
+          "white": 0.000496031746031746,
+          "error": 0,
+          "resources": 177,
+          "preset": "tunnel",
+          "blend": "1.000"
+        },
+        {
+          "signal": "silence",
+          "mean": 78.51992394179925,
+          "lit": 1,
+          "white": 0.001240079365079365,
+          "error": 0,
+          "resources": 177,
+          "preset": "tunnel",
+          "blend": "1.000"
+        }
+      ]
+    },
+    {
+      "id": "ribbons",
+      "label": "Psychedelic glowsticks",
+      "from": 126.607,
+      "duration": 24,
+      "stages": [
+        {
+          "signal": "quiet",
+          "mean": 37.954778439153415,
+          "lit": 0.9871031746031746,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "ribbons",
+          "blend": "1.000"
+        },
+        {
+          "signal": "bass",
+          "mean": 37.93617724867721,
+          "lit": 0.9211309523809523,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "ribbons",
+          "blend": "1.000"
+        },
+        {
+          "signal": "dense",
+          "mean": 84.7247023809523,
+          "lit": 1,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "ribbons",
+          "blend": "1.000"
+        },
+        {
+          "signal": "silence",
+          "mean": 7.620866402116405,
+          "lit": 0.1753472222222222,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "ribbons",
+          "blend": "1.000"
+        }
+      ]
+    },
+    {
+      "id": "starburst",
+      "label": "Starburst",
+      "from": 25.726,
+      "duration": 24,
+      "stages": [
+        {
+          "signal": "quiet",
+          "mean": 15.498594576719587,
+          "lit": 0.9025297619047619,
+          "white": 0.001984126984126984,
+          "error": 0,
+          "resources": 177,
+          "preset": "starburst",
+          "blend": "1.000"
+        },
+        {
+          "signal": "bass",
+          "mean": 23.437748015873066,
+          "lit": 0.925843253968254,
+          "white": 0.004216269841269841,
+          "error": 0,
+          "resources": 177,
+          "preset": "starburst",
+          "blend": "1.000"
+        },
+        {
+          "signal": "dense",
+          "mean": 21.976273148148202,
+          "lit": 0.9312996031746031,
+          "white": 0.004216269841269841,
+          "error": 0,
+          "resources": 177,
+          "preset": "starburst",
+          "blend": "1.000"
+        },
+        {
+          "signal": "silence",
+          "mean": 17.540013227513242,
+          "lit": 0.8871527777777778,
+          "white": 0.003224206349206349,
+          "error": 0,
+          "resources": 177,
+          "preset": "starburst",
+          "blend": "1.000"
+        }
+      ]
+    },
+    {
+      "id": "dream",
+      "label": "Spiral dreams",
+      "from": 176.233,
+      "duration": 24,
+      "stages": [
+        {
+          "signal": "quiet",
+          "mean": 143.19990079365067,
+          "lit": 0.9918154761904762,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "dream",
+          "blend": "1.000"
+        },
+        {
+          "signal": "bass",
+          "mean": 53.78827711640226,
+          "lit": 0.9997519841269841,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "dream",
+          "blend": "1.000"
+        },
+        {
+          "signal": "dense",
+          "mean": 98.10664682539687,
+          "lit": 1,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "dream",
+          "blend": "1.000"
+        },
+        {
+          "signal": "silence",
+          "mean": 0.9648644179894182,
+          "lit": 0.11805555555555555,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "dream",
+          "blend": "1.000"
+        }
+      ]
+    },
+    {
+      "id": "reaction",
+      "label": "Reaction pools",
+      "from": 200.961,
+      "duration": 24,
+      "stages": [
+        {
+          "signal": "quiet",
+          "mean": 49.90343915343929,
+          "lit": 0.9494047619047619,
+          "white": 0.006696428571428571,
+          "error": 0,
+          "resources": 177,
+          "preset": "reaction",
+          "blend": "1.000"
+        },
+        {
+          "signal": "bass",
+          "mean": 33.67410714285706,
+          "lit": 0.9853670634920635,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "reaction",
+          "blend": "1.000"
+        },
+        {
+          "signal": "dense",
+          "mean": 68.76537698412697,
+          "lit": 0.9573412698412699,
+          "white": 0.005456349206349206,
+          "error": 0,
+          "resources": 177,
+          "preset": "reaction",
+          "blend": "1.000"
+        },
+        {
+          "signal": "silence",
+          "mean": 66.95147156084666,
+          "lit": 0.9236111111111112,
+          "white": 0.023561507936507936,
+          "error": 0,
+          "resources": 177,
+          "preset": "reaction",
+          "blend": "1.000"
+        }
+      ]
+    },
+    {
+      "id": "crystal",
+      "label": "Mindblob geometry",
+      "from": 226.348,
+      "duration": 24,
+      "stages": [
+        {
+          "signal": "quiet",
+          "mean": 57.29447751322748,
+          "lit": 0.9908234126984127,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "crystal",
+          "blend": "1.000"
+        },
+        {
+          "signal": "bass",
+          "mean": 58.652281746031676,
+          "lit": 1,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "crystal",
+          "blend": "1.000"
+        },
+        {
+          "signal": "dense",
+          "mean": 57.13020833333324,
+          "lit": 0.9965277777777778,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "crystal",
+          "blend": "1.000"
+        },
+        {
+          "signal": "silence",
+          "mean": 57.17121362433866,
+          "lit": 0.9945436507936508,
+          "white": 0,
+          "error": 0,
+          "resources": 177,
+          "preset": "crystal",
+          "blend": "1.000"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "note": "Merged final signal results. Final short motion captures are in docs/milkdrop-curation; from values here refer to their individual review runs."
+}

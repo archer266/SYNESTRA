@@ -1,7 +1,7 @@
 {
   "name": "synestra",
   "productName": "SYNESTRA",
-  "version": "0.2.6",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "main": "dist-electron/main.cjs",
@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "test": "tsx --test tests/*.test.ts",
     "start": "electron .",
-    "package": "npm run build && electron-builder --win portable",
+    "package": "npm run build && electron-builder --win zip --x64 --publish never",
     "postinstall": "node node_modules/electron/install.js",
     "test:desktop": "node scripts/desktop-smoke.mjs",
     "test:visuals": "node scripts/phase2-smoke.mjs",
@@ -53,7 +53,7 @@
     "appId": "com.synestra.player",
     "productName": "SYNESTRA",
     "directories": {
-      "output": "release"
+      "output": "release/1.0.0"
     },
     "files": [
       "dist/**/*",
@@ -61,11 +61,23 @@
       "package.json"
     ],
     "win": {
-      "target": "portable"
+      "target": "zip"
     },
-    "artifactName": "SYNESTRA-${version}.${ext}"
+    "artifactName": "SYNESTRA-${version}-windows-${arch}.${ext}",
+    "extraFiles": [
+      {
+        "from": "docs/releases/1.0.0.md",
+        "to": "README-SYNESTRA.md"
+      },
+      {
+        "from": "public/licenses",
+        "to": "licenses"
+      }
+    ]
   },
   "engines": {
     "node": ">=24.0.0"
-  }
+  },
+  "description": "SYNESTRA desktop MP3 player and music visualizer",
+  "author": "archer266"
 }

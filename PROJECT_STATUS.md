@@ -1,6 +1,16 @@
 # SYNESTRA - Project status
 
-## Current direction: Classic Lightflow
+## Stable release: 1.0.0
+
+October 14, 2026: Windows x64 ZIP built and verified from its extracted executable. Type-check/build, lint, 56 tests, packaged desktop and MilkDrop regression suites passed. Source, runtime, license notices, user instructions and checksum are ready for the v1.0.0 release on the existing public main branch. See [release notes](docs/releases/1.0.0.md) and [validation](docs/releases/1.0.0-validation.md). Clean-machine testing and sustained physical 4K/60 remain pending; the binary is unsigned.
+
+## Completed work: MilkDrop visual refinement
+
+October 14, 2026: expanded the four-preset collection to ten distinct compositions, preserved legacy IDs and all existing modes, and exposed the actual loaded preset in the stage/diagnostics. Correct PCM scaling was verified; local exposure/feedback adaptations address demonstrated quiet blackness and clipped highlights. No graph, desktop service, dependency or release changes. See [MILKDROP_REFINEMENT.md](docs/MILKDROP_REFINEMENT.md) for sources, adaptations and validation.
+
+Validation: type-check, lint, 56 tests, build, static compilation reproducibility, all ten presets under four input classes, all ten at actual 1080p/4K buffers, MilkDrop regression and desktop regression passed. Full-app screenshots and decoded five-second motion captures for every preset were reviewed. Human listening, long-session stability and physical 4K/60 remain manual. Historical phase notes below remain historical.
+
+## Previous direction: Classic Lightflow
 
 October 9, 2026: focus is visual quality, not completing the old roadmap. Added one Classic light-trail world through the existing WorldAdapter and engine registry, with bounded geometry/particles, smoothed pre-gain audio response, current tuning/fullscreen/quality/recovery support. Pearl, Spectrum and MilkDrop remain. Player, desktop services and the saved analysis implementation are untouched by this change. New users default to Classic; valid existing preferences remain.
 

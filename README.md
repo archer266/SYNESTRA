@@ -2,7 +2,11 @@
 
 A standalone Windows MP3 player focused on classic music-visualizer artwork. Choose **Classic - Lightflow** for flowing luminous trails, soft color fields and drifting sparks that respond to your music. Pearl, Spectrum and MilkDrop remain available. Existing saved modes are respected; new installations start in Classic.
 
-## Install and launch
+## Windows release
+
+Download [SYNESTRA 1.0.0 for Windows x64](https://github.com/archer266/SYNESTRA/releases/tag/v1.0.0), extract the entire ZIP and open **SYNESTRA.exe**. No Node.js, npm or developer tools are needed. Keep all extracted files together. See [installation, usage, uninstall and known limitations](docs/releases/1.0.0.md). This build is unsigned; clean-machine testing remains pending.
+
+## Development setup
 
 Use Node.js 24 and npm on Windows x64:
 
@@ -21,7 +25,7 @@ npm.cmd run build
 npm.cmd start
 ```
 
-If your shell explicitly sets ELECTRON_RUN_AS_NODE, remove it before starting Electron: `Remove-Item Env:\ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue`. The development launcher already clears it. Existing files under release/ are older artifacts and do not contain Phase 4; no new release/package was produced.
+If your shell explicitly sets ELECTRON_RUN_AS_NODE, remove it before starting Electron: `Remove-Item Env:\ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue`. The development launcher already clears it. The current package is release/1.0.0/SYNESTRA-1.0.0-windows-x64.zip; older root-level release artifacts are historical.
 
 ## Listen
 **Import music** opens Windows' native multi-file picker. Cancel leaves the collection unchanged; duplicate paths are ignored. Click a queue item to play. Importing and relaunching never start playback.
@@ -42,7 +46,7 @@ Switch Pearl/Spectrum/MilkDrop in the header without changing audio, queue, volu
 
 - **Pearl:** exactly three separate translucent shader bubbles in a triangle. Left responds to bass, upper center to mids, right to treble. Flow, breathing and highlights are time-smoothed. This existing Pearl is the baseline for the later Living Pearl phase.
 - **Spectrum:** the original dimensional bars, faceted core, measured waveform traces, orbits and bounded satellite detail. Its Linear/Radial layout control remains available.
-- **MilkDrop:** four curated feedback presets with flowing color, cosmic patterns, liquid motion and energetic geometry. Open Tune for preset selection, previous/next/random, opt-in automatic cycling (15-300 seconds) and smooth transitions (1-8 seconds). Cycling advances only during audible, unsuppressed playback in the active MilkDrop scene; pause, silence, hidden windows and fallback do not consume its interval. Selection and cycling preferences survive relaunch without autoplay.
+- **MilkDrop:** ten distinct curated feedback presets: Aurora, Cosmic layers, Liquid color, Kaleidoscope, Chrome tunnel, Psychedelic glowsticks, Starburst, Spiral dreams, Reaction pools and Mindblob geometry. The stage and Signals identify the preset actually loaded; select MilkDrop explicitly if your saved mode is Pearl or Classic. Open Tune for preset selection, previous/next/random, opt-in automatic cycling (15-300 seconds) and smooth transitions (1-8 seconds). Cycling advances only during audible, unsuppressed playback in the active MilkDrop scene; pause, silence, hidden windows and fallback do not consume its interval. Selection and cycling preferences survive relaunch without autoplay.
 - **Palette:** Aurora, Glacier or Ember changes the current scene's colors. MilkDrop labels these Original, Cool hue shift and Warm hue shift; richness controls color saturation, sensitivity/smoothing shape its audio input and quality changes its mesh density.
 - **Sensitivity:** 0.5-2x bounded visual strength; it never changes listening gain or lowers the physical silence gate.
 - **Richness:** supporting scene detail/internal light. **Smoothing:** time-based feature attack/release. **Motion:** independent decorative flow/rotation/deformation; zero retains measured response in Pearl/Spectrum. MilkDrop uses the measured waveform fallback for Motion zero or OS reduced motion, then restores automatically when that constraint is removed. Arbitrary feedback presets cannot reliably eliminate motion.
@@ -59,6 +63,8 @@ Resolution limits: Auto (up to 3840 x 2160), 1280 x 720, 1920 x 1080, 2560 x 144
 Use **Enter fullscreen** on the stage; Exit fullscreen or Escape returns to the player. Fullscreen displays the visual stage, not the transport. **Tune > Signals** reports measured audio, active engine/backend, actual canvas dimensions, effective pixel ratio, smoothed RAF interval/FPS, CPU submission time, fallback reason and cleanup errors. CPU submission is not GPU execution time. 3840 x 2160 at 60 FPS is a hardware validation target, not a guarantee.
 
 GPU initialization/shader/render/context-loss failures switch to measured Canvas 2D waveform rendering without stopping audio. **Retry graphics** reconstructs the selected engine, or change modes to retry. Retries are explicit to avoid repeated context allocation on a failing driver. If Canvas 2D is also unavailable, diagnostics report it and playback remains usable.
+
+See [MilkDrop refinement and validation](docs/MILKDROP_REFINEMENT.md) for the collection, attribution, measured results and viewing checklist.
 
 ## Analysis contract and tuning
 The player still owns one persistent HTMLAudioElement and one graph:
@@ -127,7 +133,7 @@ Butterchurn 2.6.7 is pinned and lazy-loaded. Its WebGL2 renderer receives the ex
 
 The host supplies all scheduling, sizes, visibility and transitions. An adapter corrects stable Butterchurn's estimated-FPS clock so blends use elapsed seconds; some legacy equations and feedback remain frame-dependent. Exclusive GL allocation tracking reclaims abandoned resize/preset resources and deletes all resources on disposal. This integration is version-specific and needs regression testing before upgrading Butterchurn.
 
-The four presets come from the official butterchurn-presets 2.4.7 MIT distribution: Geiss - Aurora; Geiss - 3 layers (Rayleigh Scattering Mix); Flexi, martin + geiss - dedicated to the sherwin maxawow; Flexi - mindblob mix. Source JSON and hashes are retained; npm.cmd run presets:compile reproducibly creates static functions. There is no runtime eval, arbitrary preset import, remote texture loading or CSP relaxation. Creator names remain visible. [Compatibility investigation](docs/PHASE4_COMPATIBILITY.md) links upstream sources; notices are in public/licenses and included in built assets. The full presets package is not a dependency.
+The ten presets come from the official butterchurn-presets 2.4.7 MIT distribution; full creator credits and local adaptations are listed in [the refinement report](docs/MILKDROP_REFINEMENT.md). Source JSON and hashes are retained; npm.cmd run presets:compile reproducibly creates static functions. There is no runtime eval, arbitrary preset import, remote texture loading or CSP relaxation. Creator names remain visible. [Compatibility investigation](docs/PHASE4_COMPATIBILITY.md) links upstream sources; notices are in public/licenses and included in built assets. The full presets package is not a dependency.
 
 ## Validation and next steps
 
@@ -141,13 +147,17 @@ npm.cmd run test:visuals
 npm.cmd run test:scenes
 npm.cmd run test:rendering
 npm.cmd run test:milkdrop
-npm.cmd run test:milkdrop-art -- --record
+node scripts/milkdrop-collection-smoke.mjs
+node scripts/milkdrop-performance.mjs
+node scripts/milkdrop-curation.mjs --record
 ```
 
 The Electron checks need an interactive desktop and a built app. They generate MP3s in isolated temporary profiles and stub picker results. test:rendering includes the complete scene suite plus Phase 3 lifecycle/quality/fullscreen/recovery checks. Existing art capture tooling is retained; older named Fused Bubbles captures are historical, not current visualizer evidence.
 
-See [Phase 4 validation and manual checklist](docs/PHASE4_VALIDATION.md), [implementation plan](docs/IMPLEMENTATION_PLAN.md), and [project status](PROJECT_STATUS.md). Phase 4 baseline: 32 tests and relevant checks passed. Final: 42 tests, type-check, lint, build, original Electron regressions and the MilkDrop suite pass. Real-library music, quiet/silence, mute, repeated seeks, transitions, engine switching, compact controls, fullscreen and recovery were exercised. Screenshots and a silent motion recording are under docs/milkdrop. Optional art capture needs a valid track in the local library and reads it without modification.
+Current MilkDrop refinement: 56 tests, type-check, lint, build and the affected MilkDrop suite pass. All ten presets were rendered under quiet/bass/dense/silent fixtures and at actual 1080p/4K buffer sizes. [Current results and visual review](docs/MILKDROP_REFINEMENT.md).
 
-All four presets rendered genuine 3840 x 2160 buffers on the reported Radeon RX 6800 XT. Short 90-frame samples measured approximately 16.7 ms median / 16.8 ms p95 scheduling intervals, not GPU timings or sustained physical 4K/60 FPS. Long listening sessions, actual 4K displays, other GPUs and mixed-DPI monitors remain manual checks. Existing Vite bundle-size and lucide directive warnings remain. Production npm audit: zero advisories; eight moderate tooling advisories match the baseline dependency versions.
+Historical records: [Phase 4 validation and manual checklist](docs/PHASE4_VALIDATION.md), [implementation plan](docs/IMPLEMENTATION_PLAN.md), and [project status](PROJECT_STATUS.md). Phase 4 baseline: 32 tests and relevant checks passed. Final: 42 tests, type-check, lint, build, original Electron regressions and the MilkDrop suite pass. Real-library music, quiet/silence, mute, repeated seeks, transitions, engine switching, compact controls, fullscreen and recovery were exercised. Screenshots and a silent motion recording are under docs/milkdrop. Optional art capture needs a valid track in the local library and reads it without modification.
 
-Corrected roadmap: **3 Shared Rendering Architecture (complete) -> 4 MilkDrop / Butterchurn (complete) -> 5 Musical Intelligence (next) -> 6 Cinematic Shaders -> 7 Album Art Integration -> 8 Living Pearl -> 9 Visual Preset Studio.** Later phases are not implemented. Named playlist management is absent from the baseline; the existing persistent library and queue are preserved.
+All ten current presets rendered genuine 3840 x 2160 buffers on the reported Radeon RX 6800 XT. Short 90-frame samples measured approximately 16.7 ms median / 16.8 ms p95 scheduling intervals, not GPU timings or sustained physical 4K/60 FPS. Long listening sessions, actual 4K displays, other GPUs and mixed-DPI monitors remain manual checks. Existing Vite bundle-size and lucide directive warnings remain. The historical Phase 4 audit reported zero production and eight moderate tooling advisories; an audit was not rerun for this dependency-unchanged refinement.
+
+The old phase roadmap is historical and is not being resumed. The stopped Musical Intelligence implementation remains preserved. Named playlist management is absent from the baseline; the existing persistent library and queue are preserved.

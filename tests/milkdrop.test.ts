@@ -71,3 +71,29 @@ test('shader link failure is contained and partially allocated GL resources rema
  const native={LINK_STATUS:1,createProgram(){return {};},linkProgram(){},getProgramParameter(){return false;},getProgramInfoLog(){return 'fixture shader error';},deleteProgram(){disposed++;},getExtension(){return {loseContext(){lost++;}};}} as unknown as WebGL2RenderingContext;
  const resources=new GLResources(native),program=resources.gl.createProgram()!;assert.throws(()=>resources.gl.linkProgram(program),/fixture shader error/);resources.dispose();assert.equal(disposed,1);assert.equal(lost,1);
 });
+
+
+test('curated collection keeps legacy IDs and has matching static presets with distinct programs',()=>{
+ assert.ok(milkdropPresets.length>=8&&milkdropPresets.length<=12);
+ assert.deepEqual(new Set(Object.keys(presets)),new Set(milkdropPresets.map(p=>p.id)));
+ for(const {id} of milkdropPresets)assert.equal(validatePreferences({milkdropPreset:id}).milkdropPreset,id);
+ const programs=new Set(Object.values(presets).map(p=>p.warp+'|'+p.comp+'|'+p.frame_eqs?.toString()));assert.equal(programs.size,milkdropPresets.length);
+ for(const p of milkdropPresets)assert.ok(p.label&&p.name&&p.description);
+});
+test('unity PCM scaling retains quiet input and amplitude without saturation or artificial gain',()=>{
+ for(const amplitude of [.01,.1,.6]){const pcm=Float32Array.from({length:4096},(_,i)=>amplitude*Math.sin(2*Math.PI*441*i/44100)),input=new MilkAudioInput();for(let i=0;i<180;i++)input.update(pcm,44100,true,1,.5,1/60);let sum=0,clip=0;for(const n of input.bytes){sum+=((n-128)/127)**2;if(n===0||n===255)clip++;}const rms=Math.sqrt(sum/1024);assert.ok(Math.abs(rms-amplitude/Math.sqrt(2))<.004);assert.equal(clip,0);}
+});
+
+import { preparePreset } from '../src/visuals/milkdrop/prepare';
+test('quiet Aurora feedback seed is bounded and never mutates the source preset',()=>{
+ const before=JSON.stringify(presets.aurora),copy=preparePreset('aurora',presets.aurora);assert.equal(copy.shapes[0].baseVals.enabled,1);assert.ok(copy.warp.includes('ret_2 * 0.995 - 0.001'));
+ for(const bass of [0,1,3,100]){const a=copy.shapes[0].frame_eqs!({time:20,bass,bass_att:bass});assert.ok(a.a>=.18&&a.a<=.29);assert.ok(a.rad<.14);}
+ assert.equal(JSON.stringify(presets.aurora),before);assert.notEqual(copy.baseVals,presets.aurora.baseVals);
+ const normal=preparePreset('liquid',presets.liquid);assert.equal(normal.frame_eqs,presets.liquid.frame_eqs);assert.deepEqual(normal.baseVals,presets.liquid.baseVals);
+});
+
+test('preset-specific exposure and native energy mappings preserve source programs',()=>{
+ assert.ok(preparePreset('galaxy',presets.galaxy).comp.includes('ret_1 * 1.0'));
+ const k=preparePreset('kaleidoscope',presets.kaleidoscope);assert.ok(k.comp.includes('ret_1 * 0.88'));assert.ok(presets.kaleidoscope.comp.includes('ret_1 * 1.49'));
+ const s=preparePreset('starburst',presets.starburst);const quiet=s.frame_eqs!({bass_att:0,mid_att:0}),loud=s.frame_eqs!({bass_att:2,mid_att:2});assert.ok(loud.zoom>quiet.zoom);assert.ok(loud.zoom<1.05);assert.notEqual(s.frame_eqs,presets.starburst.frame_eqs);
+});

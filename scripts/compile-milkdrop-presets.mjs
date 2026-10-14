@@ -1,7 +1,7 @@
-// Reproducible static compilation of the four vendored MIT presets. No runtime eval.
+// Reproducible static compilation of the curated vendored MIT presets. No runtime eval.
 import {readFileSync,writeFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-const ids=['aurora','galaxy','liquid','crystal'];
+const ids=["aurora","galaxy","liquid","kaleidoscope","tunnel","ribbons","starburst","dream","reaction","crystal"];
 const encode=value=>{
  if(Array.isArray(value))return '['+value.map(encode).join(',')+']';
  if(value&&typeof value==='object'){

@@ -25,6 +25,7 @@ export interface VisualDiagnostics {
   stage: string; groove: number; lift: number; peak: number; gated: boolean;
   suppressed: boolean; sampleRate: number; fftSize: number; renderer: string; reducedMotion: boolean;
   mode: VisualMode;
+  activePreset:string|null;
   engine: string; backend: string; renderWidth: number; renderHeight: number;
   pixelRatio: number; frameMs: number; cpuMs: number; fps: number;
   fallbackReason: string|null; cleanupWarning: string|null;

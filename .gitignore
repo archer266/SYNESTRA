@@ -11,3 +11,17 @@ release/
 *.pem
 *.key
 docs/**/page@*.webm
+
+# MilkDrop local review sources; final clips, screenshots and reports remain available
+/docs/milkdrop-collection/*.webm
+/docs/milkdrop-curation/*.webm
+/docs/milkdrop-curation/fractal*.png
+/docs/milkdrop-curation/vortex*.png
+
+# Intermediate MilkDrop audition data (final reports and motion strips are retained)
+/docs/milkdrop-collection/*.png
+/docs/milkdrop-collection/*.jpg
+/docs/milkdrop-collection/initial-*.json
+/docs/milkdrop-collection/collection.json
+/docs/milkdrop-collection/*-review.json
+/docs/milkdrop-curation/clips/*-?.png
