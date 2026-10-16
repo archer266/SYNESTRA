@@ -1,6 +1,10 @@
 # SYNESTRA - Project status
 
-## Stable release: 1.0.0
+## Installer release: 1.0.1
+
+October 16, 2026: added per-user Windows x64 NSIS installer with setup wizard, shortcuts and uninstaller; existing player/visualizer code remains unchanged. Updated repository destination to scryingorb/SYNESTRA. Type-check, lint, 56 tests, build, actual silent install, installed desktop/MilkDrop suites and uninstall checks passed. Existing user library remained unchanged after uninstall. See [installation/release notes](docs/releases/1.0.1.md) and [validation](docs/releases/1.0.1-validation.md). Unsigned; clean-machine testing remains pending.
+
+## Previous stable release: 1.0.0
 
 October 14, 2026: Windows x64 ZIP built and verified from its extracted executable. Type-check/build, lint, 56 tests, packaged desktop and MilkDrop regression suites passed. Source, runtime, license notices, user instructions and checksum are ready for the v1.0.0 release on the existing public main branch. See [release notes](docs/releases/1.0.0.md) and [validation](docs/releases/1.0.0-validation.md). Clean-machine testing and sustained physical 4K/60 remain pending; the binary is unsigned.
 

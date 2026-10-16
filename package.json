@@ -1,7 +1,7 @@
 {
   "name": "synestra",
   "productName": "SYNESTRA",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "main": "dist-electron/main.cjs",
@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "test": "tsx --test tests/*.test.ts",
     "start": "electron .",
-    "package": "npm run build && electron-builder --win zip --x64 --publish never",
+    "package": "npm run build && electron-builder --win nsis --x64 --publish never",
     "postinstall": "node node_modules/electron/install.js",
     "test:desktop": "node scripts/desktop-smoke.mjs",
     "test:visuals": "node scripts/phase2-smoke.mjs",
@@ -53,7 +53,7 @@
     "appId": "com.synestra.player",
     "productName": "SYNESTRA",
     "directories": {
-      "output": "release/1.0.0"
+      "output": "release/1.0.1"
     },
     "files": [
       "dist/**/*",
@@ -61,23 +61,37 @@
       "package.json"
     ],
     "win": {
-      "target": "zip"
+      "target": "nsis"
     },
-    "artifactName": "SYNESTRA-${version}-windows-${arch}.${ext}",
+    "artifactName": "SYNESTRA-Setup-${version}-x64.${ext}",
     "extraFiles": [
       {
-        "from": "docs/releases/1.0.0.md",
+        "from": "docs/releases/1.0.1.md",
         "to": "README-SYNESTRA.md"
       },
       {
         "from": "public/licenses",
         "to": "licenses"
       }
-    ]
+    ],
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": false
+    }
   },
   "engines": {
     "node": ">=24.0.0"
   },
   "description": "SYNESTRA desktop MP3 player and music visualizer",
-  "author": "archer266"
+  "author": "scryingorb",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scryingorb/SYNESTRA.git"
+  }
 }

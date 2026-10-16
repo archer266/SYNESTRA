@@ -4,7 +4,7 @@ A standalone Windows MP3 player focused on classic music-visualizer artwork. Cho
 
 ## Windows release
 
-Download [SYNESTRA 1.0.0 for Windows x64](https://github.com/archer266/SYNESTRA/releases/tag/v1.0.0), extract the entire ZIP and open **SYNESTRA.exe**. No Node.js, npm or developer tools are needed. Keep all extracted files together. See [installation, usage, uninstall and known limitations](docs/releases/1.0.0.md). This build is unsigned; clean-machine testing remains pending.
+Download [SYNESTRA 1.0.1 installer for Windows x64](https://github.com/scryingorb/SYNESTRA/releases/tag/v1.0.1), run setup, then open SYNESTRA from its Start menu or desktop shortcut. No Node.js, npm or developer tools are needed. See [installation, usage, uninstall and known limitations](docs/releases/1.0.1.md). This build is unsigned; clean-machine testing remains pending.
 
 ## Development setup
 
@@ -25,7 +25,7 @@ npm.cmd run build
 npm.cmd start
 ```
 
-If your shell explicitly sets ELECTRON_RUN_AS_NODE, remove it before starting Electron: `Remove-Item Env:\ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue`. The development launcher already clears it. The current package is release/1.0.0/SYNESTRA-1.0.0-windows-x64.zip; older root-level release artifacts are historical.
+If your shell explicitly sets ELECTRON_RUN_AS_NODE, remove it before starting Electron: `Remove-Item Env:\ELECTRON_RUN_AS_NODE -ErrorAction SilentlyContinue`. The development launcher already clears it. The current installer is release/1.0.1/SYNESTRA-Setup-1.0.1-x64.exe; the 1.0.0 ZIP remains a historical release.
 
 ## Listen
 **Import music** opens Windows' native multi-file picker. Cancel leaves the collection unchanged; duplicate paths are ignored. Click a queue item to play. Importing and relaunching never start playback.
