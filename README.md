@@ -2,6 +2,12 @@
 
 A standalone Windows MP3 player focused on classic music-visualizer artwork. Choose **Classic - Lightflow** for flowing luminous trails, soft color fields and drifting sparks that respond to your music. Pearl, Spectrum and MilkDrop remain available. Existing saved modes are respected; new installations start in Classic.
 
+## UI Preview
+
+**Source-generated UI preview — not an actual application screenshot.** The default Classic / Lightflow interface with an empty library, reconstructed from the UI source, existing styles, fonts, icons and logo. The isolated artwork renderer draws one quiet frame; the application was not launched.
+
+![SYNESTRA source-generated UI preview](docs/screenshots/main-interface.png)
+
 ## Windows release
 
 Download [SYNESTRA 1.0.1 installer for Windows x64](https://github.com/scryingorb/SYNESTRA/releases/tag/v1.0.1), run setup, then open SYNESTRA from its Start menu or desktop shortcut. No Node.js, npm or developer tools are needed. See [installation, usage, uninstall and known limitations](docs/releases/1.0.1.md). This build is unsigned; clean-machine testing remains pending.
